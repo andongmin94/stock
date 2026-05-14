@@ -296,16 +296,13 @@ function getSortableSymbolFromPoint(
 }
 
 function getNextAutoRefreshDelay() {
-  const now = new Date()
-  const seconds = now.getSeconds()
-  const milliseconds = now.getMilliseconds()
-  const secondRemainder = seconds % 5
+  const remainder = Date.now() % AUTO_REFRESH_INTERVAL_MS
 
-  if (secondRemainder === 0) {
-    return AUTO_REFRESH_INTERVAL_MS - milliseconds
+  if (remainder === 0) {
+    return AUTO_REFRESH_INTERVAL_MS
   }
 
-  return (5 - secondRemainder) * 1000 - milliseconds
+  return AUTO_REFRESH_INTERVAL_MS - remainder
 }
 
 function AnimatedKrw({
@@ -860,20 +857,24 @@ export function MarketDashboard() {
   }, [])
 
   useEffect(() => {
-    const initialTimer = window.setTimeout(() => void fetchMarkets(), 0)
     let autoRefreshTimer: number | undefined
+    let isCancelled = false
 
     const scheduleNextAutoRefresh = () => {
-      autoRefreshTimer = window.setTimeout(() => {
-        void fetchMarkets()
-        scheduleNextAutoRefresh()
+      autoRefreshTimer = window.setTimeout(async () => {
+        await fetchMarkets()
+
+        if (!isCancelled) {
+          scheduleNextAutoRefresh()
+        }
       }, getNextAutoRefreshDelay())
     }
 
     scheduleNextAutoRefresh()
 
     return () => {
-      window.clearTimeout(initialTimer)
+      isCancelled = true
+
       if (autoRefreshTimer !== undefined) {
         window.clearTimeout(autoRefreshTimer)
       }

@@ -430,6 +430,8 @@ async function fetchKoreanCloses(assetSymbols: string[]) {
 }
 
 export async function GET() {
+  const generatedAt = Date.now()
+
   try {
     const [marketData, annotationsData, upbitTicker] = await Promise.all([
       postHyperliquid<[HyperliquidMeta, HyperliquidContext[]]>({
@@ -512,7 +514,7 @@ export async function GET() {
 
     return NextResponse.json(
       {
-        generatedAt: Date.now(),
+        generatedAt,
         usdtKrw,
         assets,
       },

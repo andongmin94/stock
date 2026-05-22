@@ -1,4 +1,4 @@
-import type { MarketAsset, MarketResponse } from "@/features/markets/types"
+import type { MarketAsset, MarketResponse } from "@/lib/markets/types"
 
 const HYPERLIQUID_INFO_URL = "https://api.hyperliquid.xyz/info"
 const UPBIT_USDT_KRW_URL = "https://api.upbit.com/v1/ticker?markets=KRW-USDT"

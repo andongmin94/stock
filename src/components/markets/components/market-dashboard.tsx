@@ -24,24 +24,24 @@ import {
 import { RefreshCcw } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { matchesAsset } from "@/features/markets/asset-utils"
-import { AssetSearchDialog } from "@/features/markets/components/asset-search-dialog"
-import { AssetCard } from "@/features/markets/components/asset-card"
-import { DashboardHeader } from "@/features/markets/components/dashboard-header"
-import { LoadingCards } from "@/features/markets/components/loading-cards"
-import { SortableAssetCard } from "@/features/markets/components/sortable-asset-card"
+import { matchesAsset } from "@/components/markets/asset-utils"
+import { AssetSearchDialog } from "@/components/markets/components/asset-search-dialog"
+import { AssetCard } from "@/components/markets/components/asset-card"
+import { DashboardHeader } from "@/components/markets/components/dashboard-header"
+import { LoadingCards } from "@/components/markets/components/loading-cards"
+import { SortableAssetCard } from "@/components/markets/components/sortable-asset-card"
 import {
   CARD_ADD_ANIMATION_MS,
   DEFAULT_WATCHLIST,
-} from "@/features/markets/constants"
+} from "@/components/markets/constants"
 import {
   cardCollisionDetection,
   getDragEndPoint,
   getSortableSymbolFromPoint,
-} from "@/features/markets/drag-utils"
-import { useDashboardPreferences } from "@/features/markets/hooks/use-dashboard-preferences"
-import { useMarketsData } from "@/features/markets/hooks/use-markets-data"
-import type { MarketAsset } from "@/features/markets/types"
+} from "@/components/markets/drag-utils"
+import { useDashboardPreferences } from "@/components/markets/hooks/use-dashboard-preferences"
+import { useMarketsData } from "@/components/markets/hooks/use-markets-data"
+import type { MarketAsset } from "@/lib/markets/types"
 import { cn } from "@/lib/utils"
 
 export function MarketDashboard() {

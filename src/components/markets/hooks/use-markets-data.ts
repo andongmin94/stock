@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react"
 
 import { DATA_STALE_MS } from "../constants"
 import { getNextAutoRefreshDelay } from "../refresh-utils"
-import type { MarketResponse } from "../types"
+import type { MarketResponse } from "@/lib/markets/types"
 
 export function useMarketsData() {
   const [data, setData] = useState<MarketResponse | null>(null)

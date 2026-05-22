@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 
 import { getAssetPrimaryName, getAssetSecondaryName } from "../asset-utils"
 import { categoryTone } from "../constants"
-import type { MarketAsset } from "../types"
+import type { MarketAsset } from "@/lib/markets/types"
 
 type AssetSearchDialogProps = {
   addCandidates: MarketAsset[]

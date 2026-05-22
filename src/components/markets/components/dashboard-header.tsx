@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 import { formatKrw, formatTime } from "../formatters"
-import type { MarketResponse } from "../types"
+import type { MarketResponse } from "@/lib/markets/types"
 import { ThemeButton, ViewModeButton } from "./market-controls"
 
 type DashboardHeaderProps = {

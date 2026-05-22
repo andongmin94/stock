@@ -6,7 +6,7 @@ import { CSS as DndCss } from "@dnd-kit/utilities"
 
 import { cn } from "@/lib/utils"
 
-import type { MarketAsset } from "../types"
+import type { MarketAsset } from "@/lib/markets/types"
 import { AssetCard } from "./asset-card"
 
 export function SortableAssetCard({

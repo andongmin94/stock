@@ -24,7 +24,7 @@ import {
   formatKrwChange,
   formatUsd,
 } from "../formatters"
-import type { MarketAsset } from "../types"
+import type { MarketAsset } from "@/lib/markets/types"
 import { AnimatedKrw } from "./animated-krw"
 import { RemoveButton } from "./market-controls"
 

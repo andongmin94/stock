@@ -12,7 +12,7 @@ import {
   loadJsonValue,
   loadSavedWatchlist,
 } from "../storage"
-import type { ViewMode } from "../types"
+import type { ViewMode } from "@/lib/markets/types"
 
 export function useDashboardPreferences() {
   const [isDark, setIsDark] = useState(false)

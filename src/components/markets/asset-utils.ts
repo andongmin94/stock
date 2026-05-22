@@ -1,4 +1,4 @@
-import type { MarketAsset } from "./types"
+import type { MarketAsset } from "@/lib/markets/types"
 
 export function matchesAsset(asset: MarketAsset, query: string) {
   const normalized = query.trim().toLowerCase()

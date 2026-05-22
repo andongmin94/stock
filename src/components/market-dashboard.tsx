@@ -1,3 +1,3 @@
 "use client"
 
-export { MarketDashboard } from "@/features/markets/components/market-dashboard"
+export { MarketDashboard } from "@/components/markets/components/market-dashboard"

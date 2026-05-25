@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 
-import { getAssetPrimaryName, getAssetSecondaryName } from "../asset-utils"
-import { categoryTone } from "../constants"
+import { getAssetPrimaryName, getAssetSecondaryName } from "./asset-utils"
+import { categoryTone } from "./constants"
 import type { MarketAsset } from "@/lib/markets/types"
 
 type AssetSearchDialogProps = {

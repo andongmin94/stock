@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 import { DATA_STALE_MS } from "../constants"
 import { getNextAutoRefreshDelay } from "../refresh-utils"
@@ -11,6 +11,7 @@ export function useMarketsData() {
   const [loading, setLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [clockNow, setClockNow] = useState(() => Date.now())
+  const hasFetchedInitialData = useRef(false)
 
   const fetchMarkets = useCallback(async () => {
     try {
@@ -34,6 +35,15 @@ export function useMarketsData() {
 
     return () => window.clearInterval(timer)
   }, [])
+
+  useEffect(() => {
+    if (hasFetchedInitialData.current) {
+      return
+    }
+
+    hasFetchedInitialData.current = true
+    void fetchMarkets()
+  }, [fetchMarkets])
 
   useEffect(() => {
     let autoRefreshTimer: number | undefined

@@ -1,4 +1,4 @@
-import { MarketDashboard } from "@/components/market-dashboard"
+import { MarketDashboard } from "@/components/markets/market-dashboard"
 
 export default function Home() {
   return <MarketDashboard />

@@ -14,12 +14,11 @@ export async function GET() {
       },
     })
   } catch (error) {
+    console.error("Market API request failed", error)
+
     return NextResponse.json(
       {
-        error:
-          error instanceof Error
-            ? error.message
-            : "Market data request failed",
+        error: "Market data request failed",
       },
       { status: 502 }
     )

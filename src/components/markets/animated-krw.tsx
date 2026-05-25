@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react"
 
 import { cn } from "@/lib/utils"
 
-import { MONEY_ANIMATION_MS } from "../constants"
-import { formatKrw } from "../formatters"
+import { MONEY_ANIMATION_MS } from "./constants"
+import { formatKrw } from "./formatters"
 
 function easeOutCubic(progress: number) {
   return 1 - (1 - progress) ** 3

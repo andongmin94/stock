@@ -15,15 +15,15 @@ import {
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 
-import { getAssetPrimaryName, getAssetSecondaryName } from "../asset-utils"
-import { categoryTone } from "../constants"
+import { getAssetPrimaryName, getAssetSecondaryName } from "./asset-utils"
+import { categoryTone } from "./constants"
 import {
   changeTone,
   formatChange,
   formatKrw,
   formatKrwChange,
   formatUsd,
-} from "../formatters"
+} from "./formatters"
 import type { MarketAsset } from "@/lib/markets/types"
 import { AnimatedKrw } from "./animated-krw"
 import { RemoveButton } from "./market-controls"

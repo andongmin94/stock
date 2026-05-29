@@ -190,10 +190,7 @@ export function MarketDashboard() {
               </SortableContext>
               <DragOverlay
                 adjustScale={false}
-                dropAnimation={{
-                  duration: 210,
-                  easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-                }}
+                dropAnimation={null}
               >
                 {activeDragAsset ? (
                   <div className="sortable-drag-preview">

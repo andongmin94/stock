@@ -1,13 +1,25 @@
 "use client"
 
 import type { CSSProperties } from "react"
-import { useSortable } from "@dnd-kit/sortable"
+import {
+  defaultAnimateLayoutChanges,
+  useSortable,
+  type AnimateLayoutChanges,
+} from "@dnd-kit/sortable"
 import { CSS as DndCss } from "@dnd-kit/utilities"
 
 import { cn } from "@/lib/utils"
 
 import type { MarketAsset } from "@/lib/markets/types"
 import { AssetCard } from "./asset-card"
+
+const animateLayoutChanges: AnimateLayoutChanges = (args) => {
+  if (!args.isSorting && args.wasDragging) {
+    return false
+  }
+
+  return defaultAnimateLayoutChanges(args)
+}
 
 export function SortableAssetCard({
   asset,
@@ -28,9 +40,10 @@ export function SortableAssetCard({
     transition,
   } = useSortable({
     id: asset.symbol,
+    animateLayoutChanges,
     transition: {
-      duration: 260,
-      easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+      duration: 190,
+      easing: "cubic-bezier(0.2, 0, 0, 1)",
     },
   })
   const style: CSSProperties = {

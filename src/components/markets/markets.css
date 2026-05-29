@@ -537,8 +537,7 @@
     will-change: transform;
     transition:
       opacity 160ms ease,
-      filter 160ms ease,
-      transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+      filter 160ms ease;
   }
 
   .sortable-card-grid-dragging {
@@ -549,8 +548,7 @@
     user-select: none;
     transition:
       opacity 140ms ease,
-      filter 140ms ease,
-      transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+      filter 140ms ease;
   }
 
   .sortable-card-enter > [data-slot="card"] {

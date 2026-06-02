@@ -9,8 +9,8 @@ import {
   WATCHLIST_STORAGE_KEY,
 } from "../constants"
 import {
-  loadJsonValue,
   loadSavedWatchlist,
+  loadSavedViewMode,
 } from "../storage"
 import type { ViewMode } from "@/lib/markets/types"
 
@@ -38,7 +38,7 @@ export function useDashboardPreferences() {
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
-      setViewMode(loadJsonValue<ViewMode>(VIEW_MODE_STORAGE_KEY, "regular"))
+      setViewMode(loadSavedViewMode())
       setWatchlist(loadSavedWatchlist())
       setHasLoadedLocalState(true)
     }, 0)

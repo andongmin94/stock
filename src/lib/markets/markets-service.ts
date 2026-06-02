@@ -7,7 +7,38 @@ import {
 import { fetchUpbitTicker } from "@/lib/markets/providers/upbit-client"
 import type { MarketResponse } from "@/lib/markets/types"
 
+const MARKETS_CACHE_TTL_MS = 4_000
+
+let cachedMarkets: {
+  data: MarketResponse
+  expiresAt: number
+} | null = null
+let pendingMarketsRequest: Promise<MarketResponse> | null = null
+
 export async function getMarkets(): Promise<MarketResponse> {
+  const now = Date.now()
+
+  if (cachedMarkets && cachedMarkets.expiresAt > now) {
+    return cachedMarkets.data
+  }
+
+  pendingMarketsRequest ??= fetchFreshMarkets()
+    .then((data) => {
+      cachedMarkets = {
+        data,
+        expiresAt: Date.now() + MARKETS_CACHE_TTL_MS,
+      }
+
+      return data
+    })
+    .finally(() => {
+      pendingMarketsRequest = null
+    })
+
+  return pendingMarketsRequest
+}
+
+async function fetchFreshMarkets(): Promise<MarketResponse> {
   const generatedAt = Date.now()
 
   try {

@@ -6,7 +6,7 @@
     "dev": "node --disable-warning=DEP0205 ./node_modules/next/dist/bin/next dev",
     "build": "node --disable-warning=DEP0205 ./node_modules/next/dist/bin/next build",
     "start": "node --disable-warning=DEP0205 ./node_modules/next/dist/bin/next start",
-    "lint": "eslint"
+    "lint": "oxlint --fix . && oxfmt ."
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",
@@ -28,8 +28,8 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.6",
+    "oxfmt": "^0.48.0",
+    "oxlint": "^1.65.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   },

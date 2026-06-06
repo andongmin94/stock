@@ -5,13 +5,13 @@ const categoryLabels: Record<string, string> = {
   fx: "FX",
   preipo: "비상장",
   crypto: "크립토",
-}
+};
 
 export const koreanAssetLabels: Record<
   string,
   {
-    koreanName: string
-    aliases: string[]
+    koreanName: string;
+    aliases: string[];
   }
 > = {
   "xyz:AAPL": {
@@ -20,7 +20,11 @@ export const koreanAssetLabels: Record<
   },
   "xyz:AMD": {
     koreanName: "AMD",
-    aliases: ["에이엠디", "어드밴스드 마이크로 디바이시스", "advanced micro devices"],
+    aliases: [
+      "에이엠디",
+      "어드밴스드 마이크로 디바이시스",
+      "advanced micro devices",
+    ],
   },
   "xyz:AMZN": {
     koreanName: "아마존",
@@ -176,7 +180,12 @@ export const koreanAssetLabels: Record<
   },
   "xyz:TSM": {
     koreanName: "TSMC",
-    aliases: ["티에스엠씨", "대만반도체", "타이완반도체", "taiwan semiconductor"],
+    aliases: [
+      "티에스엠씨",
+      "대만반도체",
+      "타이완반도체",
+      "taiwan semiconductor",
+    ],
   },
   "xyz:URNM": {
     koreanName: "우라늄 ETF",
@@ -194,12 +203,12 @@ export const koreanAssetLabels: Record<
     koreanName: "줌",
     aliases: ["줌비디오", "zoom"],
   },
-}
+};
 
 export function categoryLabel(category?: string) {
   if (!category) {
-    return "기타"
+    return "기타";
   }
 
-  return categoryLabels[category.toLowerCase()] ?? category.toUpperCase()
+  return categoryLabels[category.toLowerCase()] ?? category.toUpperCase();
 }

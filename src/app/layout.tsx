@@ -1,8 +1,8 @@
-import type { Metadata } from "next"
+import type { Metadata } from "next";
 
-import { TooltipProvider } from "@/components/ui/tooltip"
+import { TooltipProvider } from "@/components/ui/tooltip";
 
-import "./globals.css"
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Stock",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     ],
     apple: "/stock.png",
   },
-}
+};
 
 export default function RootLayout({
   children,
@@ -33,5 +33,5 @@ export default function RootLayout({
         <TooltipProvider>{children}</TooltipProvider>
       </body>
     </html>
-  )
+  );
 }

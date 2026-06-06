@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   useEffect,
@@ -6,132 +6,132 @@ import {
   useRef,
   useState,
   type KeyboardEvent,
-} from "react"
+} from "react";
 
-import { matchesAsset } from "../asset-utils"
-import type { MarketAsset } from "@/lib/markets/types"
+import { matchesAsset } from "../asset-utils";
+import type { MarketAsset } from "@/lib/markets/types";
 
 type UseAssetSearchOptions = {
-  assets: MarketAsset[]
-  excludedSymbols: Set<string>
-  onSelectAsset: (symbol: string) => void
-}
+  assets: MarketAsset[];
+  excludedSymbols: Set<string>;
+  onSelectAsset: (symbol: string) => void;
+};
 
 export function useAssetSearch({
   assets,
   excludedSymbols,
   onSelectAsset,
 }: UseAssetSearchOptions) {
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const [addQuery, setAddQuery] = useState("")
-  const [activeCandidateIndex, setActiveCandidateIndex] = useState(0)
-  const searchInputRef = useRef<HTMLInputElement>(null)
-  const candidateButtonsRef = useRef(new Map<string, HTMLButtonElement>())
-  const hasAddQuery = addQuery.trim().length > 0
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [addQuery, setAddQuery] = useState("");
+  const [activeCandidateIndex, setActiveCandidateIndex] = useState(0);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const candidateButtonsRef = useRef(new Map<string, HTMLButtonElement>());
+  const hasAddQuery = addQuery.trim().length > 0;
 
   const addCandidates = useMemo(() => {
     if (!hasAddQuery) {
-      return []
+      return [];
     }
 
     return assets
       .filter((asset) => !excludedSymbols.has(asset.symbol))
       .filter((asset) => !asset.isDelisted)
       .filter((asset) => matchesAsset(asset, addQuery))
-      .slice(0, 8)
-  }, [addQuery, assets, excludedSymbols, hasAddQuery])
+      .slice(0, 8);
+  }, [addQuery, assets, excludedSymbols, hasAddQuery]);
   const boundedActiveCandidateIndex =
     addCandidates.length > 0
       ? Math.min(activeCandidateIndex, addCandidates.length - 1)
-      : 0
+      : 0;
 
   useEffect(() => {
     if (!isSearchOpen) {
-      return
+      return;
     }
 
-    const previousOverflow = document.body.style.overflow
+    const previousOverflow = document.body.style.overflow;
     const focusTimer = window.setTimeout(() => {
-      searchInputRef.current?.focus()
-    }, 60)
+      searchInputRef.current?.focus();
+    }, 60);
 
-    document.body.style.overflow = "hidden"
+    document.body.style.overflow = "hidden";
 
     return () => {
-      window.clearTimeout(focusTimer)
-      document.body.style.overflow = previousOverflow
-    }
-  }, [isSearchOpen])
+      window.clearTimeout(focusTimer);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isSearchOpen]);
 
   useEffect(() => {
     if (!isSearchOpen || addCandidates.length === 0) {
-      return
+      return;
     }
 
-    const activeCandidate = addCandidates[boundedActiveCandidateIndex]
+    const activeCandidate = addCandidates[boundedActiveCandidateIndex];
     if (!activeCandidate) {
-      return
+      return;
     }
 
     candidateButtonsRef.current.get(activeCandidate.symbol)?.scrollIntoView({
       block: "nearest",
-    })
-  }, [addCandidates, boundedActiveCandidateIndex, isSearchOpen])
+    });
+  }, [addCandidates, boundedActiveCandidateIndex, isSearchOpen]);
 
   const openSearchDialog = () => {
-    setIsSearchOpen(true)
-    setActiveCandidateIndex(0)
-  }
+    setIsSearchOpen(true);
+    setActiveCandidateIndex(0);
+  };
 
   const closeSearchDialog = () => {
-    setIsSearchOpen(false)
-    setAddQuery("")
-    setActiveCandidateIndex(0)
-  }
+    setIsSearchOpen(false);
+    setAddQuery("");
+    setActiveCandidateIndex(0);
+  };
 
   const updateAddQuery = (query: string) => {
-    setAddQuery(query)
-    setActiveCandidateIndex(0)
-  }
+    setAddQuery(query);
+    setActiveCandidateIndex(0);
+  };
 
   const selectAsset = (symbol: string) => {
-    onSelectAsset(symbol)
-    setAddQuery("")
-    setActiveCandidateIndex(0)
+    onSelectAsset(symbol);
+    setAddQuery("");
+    setActiveCandidateIndex(0);
 
     if (isSearchOpen) {
-      window.setTimeout(() => searchInputRef.current?.focus(), 0)
+      window.setTimeout(() => searchInputRef.current?.focus(), 0);
     }
-  }
+  };
 
   const handleSearchKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "ArrowDown" && addCandidates.length > 0) {
-      event.preventDefault()
+      event.preventDefault();
       setActiveCandidateIndex((current) =>
-        current + 1 >= addCandidates.length ? 0 : current + 1
-      )
-      return
+        current + 1 >= addCandidates.length ? 0 : current + 1,
+      );
+      return;
     }
 
     if (event.key === "ArrowUp" && addCandidates.length > 0) {
-      event.preventDefault()
+      event.preventDefault();
       setActiveCandidateIndex((current) =>
-        current - 1 < 0 ? addCandidates.length - 1 : current - 1
-      )
-      return
+        current - 1 < 0 ? addCandidates.length - 1 : current - 1,
+      );
+      return;
     }
 
     if (event.key === "Escape") {
-      event.preventDefault()
+      event.preventDefault();
       if (addQuery) {
-        setAddQuery("")
-        return
+        setAddQuery("");
+        return;
       }
 
       if (isSearchOpen) {
-        closeSearchDialog()
+        closeSearchDialog();
       }
-      return
+      return;
     }
 
     if (
@@ -139,10 +139,10 @@ export function useAssetSearch({
       !event.nativeEvent.isComposing &&
       addCandidates[boundedActiveCandidateIndex]
     ) {
-      event.preventDefault()
-      selectAsset(addCandidates[boundedActiveCandidateIndex].symbol)
+      event.preventDefault();
+      selectAsset(addCandidates[boundedActiveCandidateIndex].symbol);
     }
-  }
+  };
 
   return {
     addCandidates,
@@ -158,5 +158,5 @@ export function useAssetSearch({
     selectAsset,
     setActiveCandidateIndex,
     updateAddQuery,
-  }
+  };
 }

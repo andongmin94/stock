@@ -1,8 +1,8 @@
-import { fetchJson } from "@/lib/markets/fetch-json"
-import type { YahooChartResponse } from "@/lib/markets/provider-types"
+import { fetchJson } from "@/lib/markets/fetch-json";
+import type { YahooChartResponse } from "@/lib/markets/provider-types";
 
-const YAHOO_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart"
-const YAHOO_TIMEOUT_MS = 5_000
+const YAHOO_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart";
+const YAHOO_TIMEOUT_MS = 5_000;
 
 export async function fetchYahooChart(sourceSymbol: string) {
   try {
@@ -15,13 +15,13 @@ export async function fetchYahooChart(sourceSymbol: string) {
         },
         cache: "no-store",
         timeoutMs: YAHOO_TIMEOUT_MS,
-      }
-    )
+      },
+    );
   } catch (error) {
     throw new Error(
       error instanceof DOMException && error.name === "AbortError"
         ? "Yahoo Finance request timed out"
-        : "Yahoo Finance request failed"
-    )
+        : "Yahoo Finance request failed",
+    );
   }
 }

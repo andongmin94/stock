@@ -1,17 +1,13 @@
-import { LayoutGrid, Moon, Sun, X } from "lucide-react"
+import { LayoutGrid, Moon, Sun, X } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/ui/tooltip";
 
-export function RemoveButton({
-  onClick,
-}: {
-  onClick: () => void
-}) {
+export function RemoveButton({ onClick }: { onClick: () => void }) {
   return (
     <Tooltip>
       <TooltipTrigger
@@ -29,7 +25,7 @@ export function RemoveButton({
       />
       <TooltipContent>목록에서 제거</TooltipContent>
     </Tooltip>
-  )
+  );
 }
 
 export function ThemeButton({ onToggle }: { onToggle: () => void }) {
@@ -53,7 +49,7 @@ export function ThemeButton({ onToggle }: { onToggle: () => void }) {
       />
       <TooltipContent>테마 전환</TooltipContent>
     </Tooltip>
-  )
+  );
 }
 
 export function ViewModeButton({ onToggle }: { onToggle: () => void }) {
@@ -74,5 +70,5 @@ export function ViewModeButton({ onToggle }: { onToggle: () => void }) {
       />
       <TooltipContent>보기 모드 전환</TooltipContent>
     </Tooltip>
-  )
+  );
 }

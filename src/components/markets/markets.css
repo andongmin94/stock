@@ -66,7 +66,12 @@
     left: 56px;
     height: 2px;
     border-radius: 999px;
-    background: linear-gradient(90deg, transparent, rgb(18 103 244 / 0.48), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(18 103 244 / 0.48),
+      transparent
+    );
     opacity: 0;
     transform: scaleX(0.72);
     transition:
@@ -244,7 +249,12 @@
   }
 
   .dark .neo-search-shell::after {
-    background: linear-gradient(90deg, transparent, rgb(90 162 255 / 0.52), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(90 162 255 / 0.52),
+      transparent
+    );
   }
 
   .dark .search-result-active {
@@ -304,8 +314,11 @@
     overflow: hidden;
     border: 1px solid rgb(255 255 255 / 0.46);
     border-radius: 20px;
-    background:
-      linear-gradient(145deg, rgb(229 233 238 / 0.38), rgb(247 249 251 / 0.28));
+    background: linear-gradient(
+      145deg,
+      rgb(229 233 238 / 0.38),
+      rgb(247 249 251 / 0.28)
+    );
     box-shadow:
       inset 5px 5px 13px rgb(16 35 62 / 0.055),
       inset -5px -5px 14px rgb(255 255 255 / 0.74);
@@ -324,12 +337,20 @@
 
   .search-dialog-results-frame::before {
     top: 0;
-    background: linear-gradient(180deg, var(--neo-surface) 0%, rgb(238 241 244 / 0));
+    background: linear-gradient(
+      180deg,
+      var(--neo-surface) 0%,
+      rgb(238 241 244 / 0)
+    );
   }
 
   .search-dialog-results-frame::after {
     bottom: 0;
-    background: linear-gradient(0deg, var(--neo-surface) 0%, rgb(238 241 244 / 0));
+    background: linear-gradient(
+      0deg,
+      var(--neo-surface) 0%,
+      rgb(238 241 244 / 0)
+    );
   }
 
   .search-dialog-results {
@@ -397,15 +418,22 @@
 
   .dark .search-dialog-results-frame {
     border-color: rgb(255 255 255 / 0.07);
-    background:
-      linear-gradient(145deg, rgb(20 25 34 / 0.62), rgb(36 45 57 / 0.32));
+    background: linear-gradient(
+      145deg,
+      rgb(20 25 34 / 0.62),
+      rgb(36 45 57 / 0.32)
+    );
     box-shadow:
       inset 5px 5px 13px rgb(0 0 0 / 0.24),
       inset -5px -5px 14px rgb(255 255 255 / 0.018);
   }
 
   .dark .search-dialog-results-frame::before {
-    background: linear-gradient(180deg, var(--neo-surface) 0%, rgb(27 34 44 / 0));
+    background: linear-gradient(
+      180deg,
+      var(--neo-surface) 0%,
+      rgb(27 34 44 / 0)
+    );
   }
 
   .dark .search-dialog-results-frame::after {
@@ -439,7 +467,12 @@
   }
 
   .neo-primary {
-    background: linear-gradient(145deg, #39b8ff 0%, var(--neo-blue) 50%, var(--neo-blue-deep) 100%);
+    background: linear-gradient(
+      145deg,
+      #39b8ff 0%,
+      var(--neo-blue) 50%,
+      var(--neo-blue-deep) 100%
+    );
     color: white;
     box-shadow: var(--neo-blue-shadow);
   }
@@ -715,4 +748,3 @@
     text-shadow: 0 0 0 rgb(37 99 235 / 0);
   }
 }
-

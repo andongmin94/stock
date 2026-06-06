@@ -15,7 +15,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: "PretendardVariable", "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-sans:
+    "PretendardVariable", "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo",
+    "Malgun Gothic", sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -106,15 +108,13 @@
     inset 1px 1px 0 rgb(255 255 255 / 0.72),
     inset -1px -1px 0 rgb(16 35 62 / 0.035);
   --neo-shadow-small:
-    5px 5px 10px rgb(16 35 62 / 0.14),
-    -5px -5px 10px rgb(255 255 255 / 0.95),
+    5px 5px 10px rgb(16 35 62 / 0.14), -5px -5px 10px rgb(255 255 255 / 0.95),
     inset 1px 1px 0 rgb(255 255 255 / 0.7);
   --neo-inset-shadow:
     inset 4px 4px 8px rgb(16 35 62 / 0.12),
     inset -4px -4px 8px rgb(255 255 255 / 0.94);
   --neo-blue-shadow:
-    6px 6px 12px rgb(16 35 62 / 0.12),
-    -5px -5px 11px rgb(255 255 255 / 0.8),
+    6px 6px 12px rgb(16 35 62 / 0.12), -5px -5px 11px rgb(255 255 255 / 0.8),
     0 6px 12px rgb(18 103 244 / 0.18);
 }
 
@@ -164,18 +164,15 @@
   --neo-shadow:
     10px 10px 18px var(--neo-dark-shadow),
     -10px -10px 18px var(--neo-light-shadow),
-    inset 1px 1px 0 rgb(255 255 255 / 0.06),
-    inset -1px -1px 0 rgb(0 0 0 / 0.24);
+    inset 1px 1px 0 rgb(255 255 255 / 0.06), inset -1px -1px 0 rgb(0 0 0 / 0.24);
   --neo-shadow-small:
-    5px 5px 10px rgb(0 0 0 / 0.38),
-    -5px -5px 10px rgb(255 255 255 / 0.04),
+    5px 5px 10px rgb(0 0 0 / 0.38), -5px -5px 10px rgb(255 255 255 / 0.04),
     inset 1px 1px 0 rgb(255 255 255 / 0.05);
   --neo-inset-shadow:
     inset 4px 4px 8px rgb(0 0 0 / 0.42),
     inset -4px -4px 8px rgb(255 255 255 / 0.04);
   --neo-blue-shadow:
-    6px 6px 12px rgb(0 0 0 / 0.34),
-    -5px -5px 11px rgb(255 255 255 / 0.035),
+    6px 6px 12px rgb(0 0 0 / 0.34), -5px -5px 11px rgb(255 255 255 / 0.035),
     0 6px 14px rgb(90 162 255 / 0.2);
 }
 
@@ -186,7 +183,9 @@
   body {
     @apply bg-background text-foreground;
     background: var(--background);
-    font-family: "PretendardVariable", "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-family:
+      "PretendardVariable", "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo",
+      "Malgun Gothic", sans-serif;
     font-feature-settings:
       "rlig" 1,
       "calt" 1;

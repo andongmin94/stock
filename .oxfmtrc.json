@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 80,
+  "sortTailwindcss": {
+    "functions": ["clsx", "cn", "cva"],
+    "stylesheet": "./src/app/globals.css"
+  },
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    ".next/**",
+    "out/**",
+    "build/**",
+    "coverage/**",
+    "*.md",
+    "node_modules/**",
+    "package.json",
+    "package-lock.json",
+    "public/fonts/**",
+    "src/app/favicon.ico",
+    "src/components/ui/**"
+  ]
+}

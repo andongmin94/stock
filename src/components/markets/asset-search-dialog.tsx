@@ -1,30 +1,30 @@
-import type { KeyboardEvent, RefObject } from "react"
-import { Plus, Search, X } from "lucide-react"
+import type { KeyboardEvent, RefObject } from "react";
+import { Plus, Search, X } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
-import { getAssetPrimaryName, getAssetSecondaryName } from "./asset-utils"
-import { categoryTone } from "./constants"
-import type { MarketAsset } from "@/lib/markets/types"
+import { getAssetPrimaryName, getAssetSecondaryName } from "./asset-utils";
+import { categoryTone } from "./constants";
+import type { MarketAsset } from "@/lib/markets/types";
 
 type AssetSearchDialogProps = {
-  addCandidates: MarketAsset[]
-  addQuery: string
-  boundedActiveCandidateIndex: number
+  addCandidates: MarketAsset[];
+  addQuery: string;
+  boundedActiveCandidateIndex: number;
   candidateButtonsRef: {
-    current: Map<string, HTMLButtonElement>
-  }
-  hasAddQuery: boolean
-  searchInputRef: RefObject<HTMLInputElement | null>
-  onActiveCandidateIndexChange: (index: number) => void
-  onAddAsset: (symbol: string) => void
-  onClose: () => void
-  onQueryChange: (query: string) => void
-  onSearchKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void
-}
+    current: Map<string, HTMLButtonElement>;
+  };
+  hasAddQuery: boolean;
+  searchInputRef: RefObject<HTMLInputElement | null>;
+  onActiveCandidateIndexChange: (index: number) => void;
+  onAddAsset: (symbol: string) => void;
+  onClose: () => void;
+  onQueryChange: (query: string) => void;
+  onSearchKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void;
+};
 
 export function AssetSearchDialog({
   addCandidates,
@@ -45,7 +45,7 @@ export function AssetSearchDialog({
       role="presentation"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
-          onClose()
+          onClose();
         }
       }}
     >
@@ -101,8 +101,8 @@ export function AssetSearchDialog({
               className="neo-search-clear"
               aria-label="검색어 지우기"
               onClick={() => {
-                onQueryChange("")
-                searchInputRef.current?.focus()
+                onQueryChange("");
+                searchInputRef.current?.focus();
               }}
             >
               <X className="size-4" />
@@ -112,25 +112,23 @@ export function AssetSearchDialog({
 
         {addCandidates.length > 0 ? (
           <div className="search-dialog-results-frame">
-            <div
-              className="search-dialog-results"
-              role="listbox"
-            >
+            <div className="search-dialog-results" role="listbox">
               {addCandidates.map((asset, index) => (
                 <button
                   key={asset.symbol}
                   ref={(node) => {
                     if (node) {
-                      candidateButtonsRef.current.set(asset.symbol, node)
-                      return
+                      candidateButtonsRef.current.set(asset.symbol, node);
+                      return;
                     }
 
-                    candidateButtonsRef.current.delete(asset.symbol)
+                    candidateButtonsRef.current.delete(asset.symbol);
                   }}
                   type="button"
                   className={cn(
                     "neo-control search-result-card search-dialog-result-card flex min-w-0 items-center justify-between gap-3 rounded-[16px] text-left",
-                    index === boundedActiveCandidateIndex && "search-result-active"
+                    index === boundedActiveCandidateIndex &&
+                      "search-result-active",
                   )}
                   onClick={() => onAddAsset(asset.symbol)}
                   onMouseEnter={() => onActiveCandidateIndexChange(index)}
@@ -147,7 +145,7 @@ export function AssetSearchDialog({
                         variant="outline"
                         className={cn(
                           "neo-pill rounded-full border-transparent px-2 font-bold",
-                          categoryTone[asset.category]
+                          categoryTone[asset.category],
                         )}
                       >
                         {asset.category}
@@ -173,5 +171,5 @@ export function AssetSearchDialog({
         )}
       </div>
     </div>
-  )
+  );
 }

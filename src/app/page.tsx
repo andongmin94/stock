@@ -1,5 +1,5 @@
-import { MarketDashboard } from "@/components/markets/market-dashboard"
+import { MarketDashboard } from "@/components/markets/market-dashboard";
 
 export default function Home() {
-  return <MarketDashboard />
+  return <MarketDashboard />;
 }

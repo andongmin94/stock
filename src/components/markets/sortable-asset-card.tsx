@@ -1,25 +1,25 @@
-"use client"
+"use client";
 
-import type { CSSProperties } from "react"
+import type { CSSProperties } from "react";
 import {
   defaultAnimateLayoutChanges,
   useSortable,
   type AnimateLayoutChanges,
-} from "@dnd-kit/sortable"
-import { CSS as DndCss } from "@dnd-kit/utilities"
+} from "@dnd-kit/sortable";
+import { CSS as DndCss } from "@dnd-kit/utilities";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-import type { MarketAsset } from "@/lib/markets/types"
-import { AssetCard } from "./asset-card"
+import type { MarketAsset } from "@/lib/markets/types";
+import { AssetCard } from "./asset-card";
 
 const animateLayoutChanges: AnimateLayoutChanges = (args) => {
   if (!args.isSorting && args.wasDragging) {
-    return false
+    return false;
   }
 
-  return defaultAnimateLayoutChanges(args)
-}
+  return defaultAnimateLayoutChanges(args);
+};
 
 export function SortableAssetCard({
   asset,
@@ -27,29 +27,24 @@ export function SortableAssetCard({
   isEntering,
   onRemove,
 }: {
-  asset: MarketAsset
-  compact: boolean
-  isEntering: boolean
-  onRemove: () => void
+  asset: MarketAsset;
+  compact: boolean;
+  isEntering: boolean;
+  onRemove: () => void;
 }) {
-  const {
-    isDragging,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-  } = useSortable({
-    id: asset.symbol,
-    animateLayoutChanges,
-    transition: {
-      duration: 190,
-      easing: "cubic-bezier(0.2, 0, 0, 1)",
-    },
-  })
+  const { isDragging, listeners, setNodeRef, transform, transition } =
+    useSortable({
+      id: asset.symbol,
+      animateLayoutChanges,
+      transition: {
+        duration: 190,
+        easing: "cubic-bezier(0.2, 0, 0, 1)",
+      },
+    });
   const style: CSSProperties = {
     transform: DndCss.Transform.toString(transform),
     transition: isDragging ? "none" : transition,
-  }
+  };
 
   return (
     <div
@@ -58,16 +53,12 @@ export function SortableAssetCard({
       className={cn(
         "sortable-card-shell",
         isDragging && "sortable-card-dragging",
-        isEntering && !isDragging && "sortable-card-enter"
+        isEntering && !isDragging && "sortable-card-enter",
       )}
       style={style}
       {...listeners}
     >
-      <AssetCard
-        asset={asset}
-        onRemove={onRemove}
-        compact={compact}
-      />
+      <AssetCard asset={asset} onRemove={onRemove} compact={compact} />
     </div>
-  )
+  );
 }

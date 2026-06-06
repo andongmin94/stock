@@ -1,26 +1,26 @@
-import { NextResponse } from "next/server"
+import { NextResponse } from "next/server";
 
-import { getMarkets } from "@/lib/markets/markets-service"
+import { getMarkets } from "@/lib/markets/markets-service";
 
-export const dynamic = "force-dynamic"
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const data = await getMarkets()
+    const data = await getMarkets();
 
     return NextResponse.json(data, {
       headers: {
         "cache-control": "no-store",
       },
-    })
+    });
   } catch (error) {
-    console.error("Market API request failed", error)
+    console.error("Market API request failed", error);
 
     return NextResponse.json(
       {
         error: "Market data request failed",
       },
-      { status: 502 }
-    )
+      { status: 502 },
+    );
   }
 }

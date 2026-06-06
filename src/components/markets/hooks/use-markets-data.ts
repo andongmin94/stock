@@ -1,74 +1,74 @@
-"use client"
+"use client";
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react";
 
-import { DATA_STALE_MS } from "../constants"
-import { getNextAutoRefreshDelay } from "../refresh-utils"
-import type { MarketResponse } from "@/lib/markets/types"
+import { DATA_STALE_MS } from "../constants";
+import { getNextAutoRefreshDelay } from "../refresh-utils";
+import type { MarketResponse } from "@/lib/markets/types";
 
 export function useMarketsData() {
-  const [data, setData] = useState<MarketResponse | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const [clockNow, setClockNow] = useState(() => Date.now())
-  const hasFetchedInitialData = useRef(false)
+  const [data, setData] = useState<MarketResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [clockNow, setClockNow] = useState(() => Date.now());
+  const hasFetchedInitialData = useRef(false);
 
   const fetchMarkets = useCallback(async () => {
     try {
-      const response = await fetch("/api/markets", { cache: "no-store" })
+      const response = await fetch("/api/markets", { cache: "no-store" });
       if (!response.ok) {
-        throw new Error("시세를 불러오지 못했습니다.")
+        throw new Error("시세를 불러오지 못했습니다.");
       }
 
-      const nextData = (await response.json()) as MarketResponse
-      setData(nextData)
-      setErrorMessage(null)
+      const nextData = (await response.json()) as MarketResponse;
+      setData(nextData);
+      setErrorMessage(null);
     } catch {
-      setErrorMessage("시세를 불러오지 못했습니다. 자동으로 다시 시도합니다.")
+      setErrorMessage("시세를 불러오지 못했습니다. 자동으로 다시 시도합니다.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    const timer = window.setInterval(() => setClockNow(Date.now()), 5_000)
+    const timer = window.setInterval(() => setClockNow(Date.now()), 5_000);
 
-    return () => window.clearInterval(timer)
-  }, [])
+    return () => window.clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     if (hasFetchedInitialData.current) {
-      return
+      return;
     }
 
-    hasFetchedInitialData.current = true
-    void fetchMarkets()
-  }, [fetchMarkets])
+    hasFetchedInitialData.current = true;
+    void fetchMarkets();
+  }, [fetchMarkets]);
 
   useEffect(() => {
-    let autoRefreshTimer: number | undefined
-    let isCancelled = false
+    let autoRefreshTimer: number | undefined;
+    let isCancelled = false;
 
     const scheduleNextAutoRefresh = () => {
       autoRefreshTimer = window.setTimeout(async () => {
-        await fetchMarkets()
+        await fetchMarkets();
 
         if (!isCancelled) {
-          scheduleNextAutoRefresh()
+          scheduleNextAutoRefresh();
         }
-      }, getNextAutoRefreshDelay())
-    }
+      }, getNextAutoRefreshDelay());
+    };
 
-    scheduleNextAutoRefresh()
+    scheduleNextAutoRefresh();
 
     return () => {
-      isCancelled = true
+      isCancelled = true;
 
       if (autoRefreshTimer !== undefined) {
-        window.clearTimeout(autoRefreshTimer)
+        window.clearTimeout(autoRefreshTimer);
       }
-    }
-  }, [fetchMarkets])
+    };
+  }, [fetchMarkets]);
 
   return {
     data,
@@ -76,5 +76,5 @@ export function useMarketsData() {
     fetchMarkets,
     isDataStale: Boolean(data && clockNow - data.generatedAt > DATA_STALE_MS),
     loading,
-  }
+  };
 }

@@ -1,9 +1,9 @@
-import type { MarketAsset } from "@/lib/markets/types"
+import type { MarketAsset } from "@/lib/markets/types";
 
 export function matchesAsset(asset: MarketAsset, query: string) {
-  const normalized = query.trim().toLowerCase()
+  const normalized = query.trim().toLowerCase();
   if (!normalized) {
-    return true
+    return true;
   }
 
   const haystack = [
@@ -15,17 +15,17 @@ export function matchesAsset(asset: MarketAsset, query: string) {
     ...asset.keywords,
   ]
     .join(" ")
-    .toLowerCase()
+    .toLowerCase();
 
-  return haystack.includes(normalized)
+  return haystack.includes(normalized);
 }
 
 export function getAssetPrimaryName(asset: MarketAsset) {
-  return asset.koreanName ?? asset.displayName
+  return asset.koreanName ?? asset.displayName;
 }
 
 export function getAssetSecondaryName(asset: MarketAsset) {
   return asset.koreanName
     ? `${asset.displayName} · ${asset.symbol}`
-    : asset.symbol
+    : asset.symbol;
 }

@@ -1,23 +1,27 @@
 type FetchJsonOptions = RequestInit & {
-  timeoutMs?: number
-}
+  timeoutMs?: number;
+};
 
-const DEFAULT_FETCH_TIMEOUT_MS = 8_000
+const DEFAULT_FETCH_TIMEOUT_MS = 8_000;
 
 export async function fetchJson<T>(
   url: string,
-  { timeoutMs = DEFAULT_FETCH_TIMEOUT_MS, signal, ...init }: FetchJsonOptions = {}
+  {
+    timeoutMs = DEFAULT_FETCH_TIMEOUT_MS,
+    signal,
+    ...init
+  }: FetchJsonOptions = {},
 ) {
-  const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), timeoutMs)
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
-  const abortFromParent = () => controller.abort()
+  const abortFromParent = () => controller.abort();
 
   if (signal) {
     if (signal.aborted) {
-      controller.abort()
+      controller.abort();
     } else {
-      signal.addEventListener("abort", abortFromParent, { once: true })
+      signal.addEventListener("abort", abortFromParent, { once: true });
     }
   }
 
@@ -25,15 +29,15 @@ export async function fetchJson<T>(
     const response = await fetch(url, {
       ...init,
       signal: controller.signal,
-    })
+    });
 
     if (!response.ok) {
-      throw new Error(`Request failed: ${response.status}`)
+      throw new Error(`Request failed: ${response.status}`);
     }
 
-    return (await response.json()) as T
+    return (await response.json()) as T;
   } finally {
-    clearTimeout(timeout)
-    signal?.removeEventListener("abort", abortFromParent)
+    clearTimeout(timeout);
+    signal?.removeEventListener("abort", abortFromParent);
   }
 }

@@ -1,22 +1,22 @@
-import { Plus, RefreshCcw, Search } from "lucide-react"
+import { Plus, RefreshCcw, Search } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-import { formatKrw, formatTime } from "./formatters"
-import type { MarketResponse } from "@/lib/markets/types"
-import { ThemeButton, ViewModeButton } from "./market-controls"
+import { formatKrw, formatTime } from "./formatters";
+import type { MarketResponse } from "@/lib/markets/types";
+import { ThemeButton, ViewModeButton } from "./market-controls";
 
 type DashboardHeaderProps = {
-  data: MarketResponse | null
-  errorMessage: string | null
-  isDataStale: boolean
-  onOpenSearch: () => void
-  onResetWatchlist: () => void
-  onToggleTheme: () => void
-  onToggleViewMode: () => void
-}
+  data: MarketResponse | null;
+  errorMessage: string | null;
+  isDataStale: boolean;
+  onOpenSearch: () => void;
+  onResetWatchlist: () => void;
+  onToggleTheme: () => void;
+  onToggleViewMode: () => void;
+};
 
 export function DashboardHeader({
   data,
@@ -31,21 +31,23 @@ export function DashboardHeader({
     <header className="neo-panel flex flex-col gap-4 rounded-[18px] p-4 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex min-w-0 items-center gap-3">
         <div className="flex size-14 shrink-0 items-center justify-center">
-          <span
-            role="img"
-            aria-label="Stock"
-            className="stock-logo-mark"
-          />
+          <span role="img" aria-label="Stock" className="stock-logo-mark" />
         </div>
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="text-2xl font-black tracking-tight text-primary">
               Stock
             </h1>
-            <Badge variant="outline" className="neo-pill rounded-full border-transparent px-3 text-primary">
+            <Badge
+              variant="outline"
+              className="neo-pill rounded-full border-transparent px-3 text-primary"
+            >
               원화 시세
             </Badge>
-            <Badge variant="secondary" className="neo-pill rounded-full border-transparent px-3 text-foreground">
+            <Badge
+              variant="secondary"
+              className="neo-pill rounded-full border-transparent px-3 text-foreground"
+            >
               환율 {data ? formatKrw(data.usdtKrw) : "-"}
             </Badge>
             <button
@@ -73,13 +75,13 @@ export function DashboardHeader({
         <span
           className={cn(
             "neo-pill data-status-pill inline-flex h-9 items-center gap-2 rounded-full border-transparent px-3 text-sm font-semibold text-muted-foreground",
-            (errorMessage || isDataStale) && "data-status-stale"
+            (errorMessage || isDataStale) && "data-status-stale",
           )}
         >
           <span
             className={cn(
               "status-dot",
-              (errorMessage || isDataStale) && "status-dot-stale"
+              (errorMessage || isDataStale) && "status-dot-stale",
             )}
           />
           {errorMessage
@@ -88,15 +90,11 @@ export function DashboardHeader({
         </span>
         <ViewModeButton onToggle={onToggleViewMode} />
         <ThemeButton onToggle={onToggleTheme} />
-        <Button
-          type="button"
-          variant="outline"
-          onClick={onResetWatchlist}
-        >
+        <Button type="button" variant="outline" onClick={onResetWatchlist}>
           <RefreshCcw className="size-4" />
           초기화
         </Button>
       </div>
     </header>
-  )
+  );
 }

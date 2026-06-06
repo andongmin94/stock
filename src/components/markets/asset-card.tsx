@@ -1,32 +1,32 @@
-import { ArrowDownRight, ArrowUpRight, ExternalLink } from "lucide-react"
+import { ArrowDownRight, ArrowUpRight, ExternalLink } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardAction,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { cn } from "@/lib/utils"
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
-import { getAssetPrimaryName, getAssetSecondaryName } from "./asset-utils"
-import { categoryTone } from "./constants"
+import { getAssetPrimaryName, getAssetSecondaryName } from "./asset-utils";
+import { categoryTone } from "./constants";
 import {
   changeTone,
   formatChange,
   formatKrw,
   formatKrwChange,
   formatUsd,
-} from "./formatters"
-import type { MarketAsset } from "@/lib/markets/types"
-import { AnimatedKrw } from "./animated-krw"
-import { RemoveButton } from "./market-controls"
+} from "./formatters";
+import type { MarketAsset } from "@/lib/markets/types";
+import { AnimatedKrw } from "./animated-krw";
+import { RemoveButton } from "./market-controls";
 
 export function AssetCard({
   asset,
@@ -34,22 +34,22 @@ export function AssetCard({
   compact = false,
   isPreview = false,
 }: {
-  asset: MarketAsset
-  onRemove: () => void
-  compact?: boolean
-  isPreview?: boolean
+  asset: MarketAsset;
+  onRemove: () => void;
+  compact?: boolean;
+  isPreview?: boolean;
 }) {
-  const primaryName = getAssetPrimaryName(asset)
-  const secondaryName = getAssetSecondaryName(asset)
+  const primaryName = getAssetPrimaryName(asset);
+  const secondaryName = getAssetSecondaryName(asset);
 
   return (
     <Card
       className={cn(
         "neo-panel neo-hover-glow gap-0 rounded-[18px] py-0",
-        compact && "asset-card-compact"
+        compact && "asset-card-compact",
       )}
     >
-      <CardHeader className={cn("gap-2 px-4 pb-3 pt-4", compact && "pb-2")}>
+      <CardHeader className={cn("gap-2 px-4 pt-4 pb-3", compact && "pb-2")}>
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             <CardTitle className="truncate text-base font-bold tracking-normal text-foreground">
@@ -76,14 +76,17 @@ export function AssetCard({
                 variant="outline"
                 className={cn(
                   "neo-pill rounded-full border-transparent px-2.5 font-bold",
-                  categoryTone[asset.category]
+                  categoryTone[asset.category],
                 )}
               >
                 {asset.category}
               </Badge>
             ) : null}
             {asset.isDelisted && !compact ? (
-              <Badge variant="secondary" className="neo-pill rounded-full border-transparent">
+              <Badge
+                variant="secondary"
+                className="neo-pill rounded-full border-transparent"
+              >
                 종료
               </Badge>
             ) : null}
@@ -100,24 +103,31 @@ export function AssetCard({
           </CardAction>
         ) : null}
       </CardHeader>
-      <CardContent className={cn("space-y-3 px-4 pb-4", compact && "space-y-2 pb-3")}>
+      <CardContent
+        className={cn("space-y-3 px-4 pb-4", compact && "space-y-2 pb-3")}
+      >
         <div className={cn("min-w-0 px-1 py-3", compact && "py-1")}>
           <div
             className={cn(
-              "truncate font-black leading-tight tracking-tight text-foreground tabular-nums",
-              compact ? "text-[1.55rem]" : "text-[1.8rem]"
+              "truncate leading-tight font-black tracking-tight text-foreground tabular-nums",
+              compact ? "text-[1.55rem]" : "text-[1.8rem]",
             )}
           >
             <AnimatedKrw value={asset.priceKrw} />
           </div>
-          <div className={cn("flex flex-wrap items-center gap-2 text-sm", compact ? "mt-1" : "mt-2")}>
+          <div
+            className={cn(
+              "flex flex-wrap items-center gap-2 text-sm",
+              compact ? "mt-1" : "mt-2",
+            )}
+          >
             <span className="text-muted-foreground">
               {asset.referenceLabel} 대비
             </span>
             <span
               className={cn(
                 "inline-flex items-center gap-1 font-bold",
-                changeTone(asset.changeKrw)
+                changeTone(asset.changeKrw),
               )}
             >
               {asset.changeKrw !== null && asset.changeKrw > 0 ? (
@@ -140,5 +150,5 @@ export function AssetCard({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

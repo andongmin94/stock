@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import {
   DEFAULT_WATCHLIST,
@@ -11,12 +11,16 @@ import {
 import { loadSavedWatchlist, loadSavedViewMode } from "../storage";
 import type { ViewMode } from "@/lib/markets/types";
 
+const THEME_SWITCH_CLASS = "theme-switching";
+const THEME_SWITCH_SUPPRESS_MS = 140;
+
 export function useDashboardPreferences() {
   const [isDark, setIsDark] = useState(false);
   const [hasLoadedTheme, setHasLoadedTheme] = useState(false);
   const [hasLoadedLocalState, setHasLoadedLocalState] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>("regular");
   const [watchlist, setWatchlist] = useState<string[]>(DEFAULT_WATCHLIST);
+  const themeSwitchTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -53,6 +57,16 @@ export function useDashboardPreferences() {
   }, [hasLoadedTheme, isDark]);
 
   useEffect(() => {
+    return () => {
+      if (themeSwitchTimerRef.current !== null) {
+        window.clearTimeout(themeSwitchTimerRef.current);
+      }
+
+      document.documentElement.classList.remove(THEME_SWITCH_CLASS);
+    };
+  }, []);
+
+  useEffect(() => {
     if (!hasLoadedLocalState) {
       return;
     }
@@ -67,9 +81,23 @@ export function useDashboardPreferences() {
     );
   }, [hasLoadedLocalState, viewMode, watchlist]);
 
-  const toggleTheme = useCallback(() => {
-    setIsDark((current) => !current);
+  const suppressThemeSurfaceTransitions = useCallback(() => {
+    document.documentElement.classList.add(THEME_SWITCH_CLASS);
+
+    if (themeSwitchTimerRef.current !== null) {
+      window.clearTimeout(themeSwitchTimerRef.current);
+    }
+
+    themeSwitchTimerRef.current = window.setTimeout(() => {
+      document.documentElement.classList.remove(THEME_SWITCH_CLASS);
+      themeSwitchTimerRef.current = null;
+    }, THEME_SWITCH_SUPPRESS_MS);
   }, []);
+
+  const toggleTheme = useCallback(() => {
+    suppressThemeSurfaceTransitions();
+    setIsDark((current) => !current);
+  }, [suppressThemeSurfaceTransitions]);
 
   const toggleViewMode = useCallback(() => {
     setViewMode((current) => (current === "compact" ? "regular" : "compact"));

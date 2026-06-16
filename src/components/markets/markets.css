@@ -1,4 +1,15 @@
-﻿@layer utilities {
+@layer utilities {
+  .theme-switching .neo-hover-glow,
+  .theme-switching .neo-search-shell,
+  .theme-switching .neo-search-shell::after,
+  .theme-switching .search-result-card,
+  .theme-switching .search-result-plus,
+  .theme-switching .data-status-pill,
+  .theme-switching .sortable-card-shell,
+  .theme-switching .sortable-card-dragging > [data-slot="card"] {
+    transition: none !important;
+  }
+
   .neo-panel {
     background: var(--neo-surface);
     border: 1px solid var(--neo-edge-soft);

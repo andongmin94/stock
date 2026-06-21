@@ -6,7 +6,11 @@ import { cn } from "@/lib/utils";
 
 import { formatKrw, formatTime } from "./formatters";
 import type { MarketResponse } from "@/lib/markets/types";
-import { ThemeButton, ViewModeButton } from "./market-controls";
+import {
+  ThemeButton,
+  ViewModeButton,
+  type ThemeTransitionOrigin,
+} from "./market-controls";
 
 type DashboardHeaderProps = {
   data: MarketResponse | null;
@@ -14,7 +18,7 @@ type DashboardHeaderProps = {
   isDataStale: boolean;
   onOpenSearch: () => void;
   onResetWatchlist: () => void;
-  onToggleTheme: () => void;
+  onToggleTheme: (origin?: ThemeTransitionOrigin) => void;
   onToggleViewMode: () => void;
 };
 

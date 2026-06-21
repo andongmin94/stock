@@ -7,6 +7,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+export type ThemeTransitionOrigin = {
+  x: number;
+  y: number;
+};
+
 export function RemoveButton({ onClick }: { onClick: () => void }) {
   return (
     <Tooltip>
@@ -28,7 +33,11 @@ export function RemoveButton({ onClick }: { onClick: () => void }) {
   );
 }
 
-export function ThemeButton({ onToggle }: { onToggle: () => void }) {
+export function ThemeButton({
+  onToggle,
+}: {
+  onToggle: (origin: ThemeTransitionOrigin) => void;
+}) {
   return (
     <Tooltip>
       <TooltipTrigger
@@ -38,7 +47,14 @@ export function ThemeButton({ onToggle }: { onToggle: () => void }) {
             size="icon"
             variant="outline"
             aria-label="테마 전환"
-            onClick={onToggle}
+            onClick={(event) => {
+              const rect = event.currentTarget.getBoundingClientRect();
+
+              onToggle({
+                x: rect.left + rect.width / 2,
+                y: rect.top + rect.height / 2,
+              });
+            }}
           >
             <span className="theme-toggle-icon-stack">
               <Sun className="theme-toggle-icon theme-toggle-sun" />

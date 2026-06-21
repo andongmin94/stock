@@ -194,3 +194,46 @@
     @apply font-sans;
   }
 }
+
+html.theme-reveal-running::view-transition-group(root) {
+  animation-duration: 560ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html.theme-reveal-running::view-transition-old(root),
+html.theme-reveal-running::view-transition-new(root) {
+  animation-duration: 560ms;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  mix-blend-mode: normal;
+}
+
+html.theme-reveal-running::view-transition-old(root) {
+  animation-name: none;
+}
+
+html.theme-reveal-running::view-transition-new(root) {
+  animation-name: theme-radial-reveal;
+}
+
+@keyframes theme-radial-reveal {
+  from {
+    clip-path: circle(
+      0 at var(--theme-reveal-x, 50vw) var(--theme-reveal-y, 50vh)
+    );
+  }
+  to {
+    clip-path: circle(
+      var(--theme-reveal-radius, 150vmax) at var(--theme-reveal-x, 50vw)
+        var(--theme-reveal-y, 50vh)
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-reveal-running::view-transition-group(root),
+  html.theme-reveal-running::view-transition-old(root),
+  html.theme-reveal-running::view-transition-new(root) {
+    animation-duration: 1ms;
+  }
+}

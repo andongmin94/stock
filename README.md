@@ -1,18 +1,11 @@
 <p align="center">
-  <img src="./public/stock.png" width="112" alt="Stock 로고" />
+  <img src="./public/stock.svg" width="112" alt="Stock 로고" />
 </p>
 
 <h1 align="center">Stock</h1>
 
 <p align="center">
   Hyperliquid <code>xyz</code> 마켓 가격을 Upbit <code>USDT/KRW</code> 환율로 원화 환산해서 보는 관심종목 대시보드입니다.
-</p>
-
-<p align="center">
-  <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16.2.6-111827?logo=nextdotjs&logoColor=white" />
-  <img alt="React" src="https://img.shields.io/badge/React-19.2.6-149eca?logo=react&logoColor=white" />
-  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-6.0.3-3178c6?logo=typescript&logoColor=white" />
-  <img alt="Oxlint" src="https://img.shields.io/badge/lint-oxlint%20%2B%20oxfmt-2848ff" />
 </p>
 
 <p align="center">

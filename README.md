@@ -81,6 +81,7 @@ npm run dev -- -p 3001
 | `npm run build` | 프로덕션 빌드 |
 | `npm run start` | 빌드 결과 실행 |
 | `npm run lint` | `oxlint --fix`, `oxfmt`, `package.json` 줄맞춤 실행 |
+| `npm run test` | Vitest 회귀 테스트 실행 |
 
 ## 개발 체크
 
@@ -88,6 +89,7 @@ npm run dev -- -p 3001
 
 ```sh
 npm run lint
+npm run test
 npx tsc --noEmit
 npx --yes knip --reporter compact
 npm run build

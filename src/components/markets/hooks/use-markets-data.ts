@@ -12,22 +12,56 @@ export function useMarketsData() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [clockNow, setClockNow] = useState(() => Date.now());
   const hasFetchedInitialData = useRef(false);
+  const activeRequestController = useRef<AbortController | null>(null);
+  const latestRequestId = useRef(0);
 
   const fetchMarkets = useCallback(async () => {
+    const requestId = latestRequestId.current + 1;
+    latestRequestId.current = requestId;
+    activeRequestController.current?.abort();
+
+    const controller = new AbortController();
+    activeRequestController.current = controller;
+
     try {
-      const response = await fetch("/api/markets", { cache: "no-store" });
+      const response = await fetch("/api/markets", {
+        cache: "no-store",
+        signal: controller.signal,
+      });
       if (!response.ok) {
         throw new Error("시세를 불러오지 못했습니다.");
       }
 
       const nextData = (await response.json()) as MarketResponse;
+
+      if (requestId !== latestRequestId.current) {
+        return;
+      }
+
       setData(nextData);
       setErrorMessage(null);
-    } catch {
+    } catch (error) {
+      if (
+        requestId !== latestRequestId.current ||
+        (error instanceof DOMException && error.name === "AbortError")
+      ) {
+        return;
+      }
+
       setErrorMessage("시세를 불러오지 못했습니다. 자동으로 다시 시도합니다.");
     } finally {
-      setLoading(false);
+      if (requestId === latestRequestId.current) {
+        activeRequestController.current = null;
+        setLoading(false);
+      }
     }
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      latestRequestId.current += 1;
+      activeRequestController.current?.abort();
+    };
   }, []);
 
   useEffect(() => {
@@ -51,7 +85,9 @@ export function useMarketsData() {
 
     const scheduleNextAutoRefresh = () => {
       autoRefreshTimer = window.setTimeout(async () => {
-        await fetchMarkets();
+        if (!activeRequestController.current) {
+          await fetchMarkets();
+        }
 
         if (!isCancelled) {
           scheduleNextAutoRefresh();

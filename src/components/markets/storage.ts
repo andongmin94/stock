@@ -10,16 +10,21 @@ function loadJsonValue<T>(key: string, fallback: T): T {
     return fallback;
   }
 
-  const saved = window.localStorage.getItem(key);
-
-  if (!saved) {
-    return fallback;
-  }
-
   try {
+    const saved = window.localStorage.getItem(key);
+
+    if (!saved) {
+      return fallback;
+    }
+
     return JSON.parse(saved) as T;
   } catch {
-    window.localStorage.removeItem(key);
+    try {
+      window.localStorage.removeItem(key);
+    } catch {
+      // Storage can be unavailable in restricted browsing contexts.
+    }
+
     return fallback;
   }
 }
@@ -39,6 +44,10 @@ export function loadSavedWatchlist() {
       ),
     ),
   );
+
+  if (savedWatchlist.length === 0) {
+    return [];
+  }
 
   return validWatchlist.length > 0 ? validWatchlist : DEFAULT_WATCHLIST;
 }

@@ -33,8 +33,16 @@ export type YahooChartResponse = {
   chart?: {
     result?: Array<{
       meta?: {
+        previousClose?: number;
         regularMarketPrice?: number;
+        currentTradingPeriod?: {
+          regular?: {
+            start?: number;
+            end?: number;
+          };
+        };
       };
+      timestamp?: Array<number | null>;
       indicators?: {
         quote?: Array<{
           close?: Array<number | null>;

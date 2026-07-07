@@ -6,6 +6,7 @@ import type {
 
 const KOREAN_CLOSE_CACHE_TTL_MS = 60_000;
 const KOREAN_CLOSE_ERROR_CACHE_TTL_MS = 15_000;
+const KOREAN_CLOSE_SETTLE_SECONDS = 60;
 
 const koreanCloseSources: Record<string, string> = {
   "xyz:HYUNDAI": "005380.KS",
@@ -30,21 +31,49 @@ function toNumber(value: string | number | null | undefined) {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
-function parseYahooClose(data: YahooChartResponse): KoreanClose | null {
+function isIncompleteCurrentSession(
+  timestamp: number,
+  regularPeriod: { start?: number; end?: number } | undefined,
+  nowSeconds: number,
+) {
+  const start = toNumber(regularPeriod?.start);
+  const end = toNumber(regularPeriod?.end);
+
+  return (
+    start !== null &&
+    end !== null &&
+    timestamp >= start &&
+    timestamp < end &&
+    nowSeconds < end + KOREAN_CLOSE_SETTLE_SECONDS
+  );
+}
+
+export function parseYahooClose(
+  data: YahooChartResponse,
+  nowMs = Date.now(),
+): KoreanClose | null {
   const result = data.chart?.result?.[0];
   const closes = result?.indicators?.quote?.[0]?.close ?? [];
+  const timestamps = result?.timestamp ?? [];
+  const regularPeriod = result?.meta?.currentTradingPeriod?.regular;
+  const nowSeconds = Math.floor(nowMs / 1_000);
 
   for (let index = closes.length - 1; index >= 0; index -= 1) {
     const priceKrw = toNumber(closes[index]);
+    const timestamp = toNumber(timestamps[index]);
 
-    if (priceKrw !== null) {
+    if (
+      priceKrw !== null &&
+      timestamp !== null &&
+      !isIncompleteCurrentSession(timestamp, regularPeriod, nowSeconds)
+    ) {
       return {
         priceKrw,
       };
     }
   }
 
-  const fallbackPrice = toNumber(result?.meta?.regularMarketPrice);
+  const fallbackPrice = toNumber(result?.meta?.previousClose);
 
   if (fallbackPrice === null) {
     return null;

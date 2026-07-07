@@ -25,10 +25,13 @@ async function main() {
     case "lint":
       await runLint();
       return;
+    case "test":
+      await runTests(extraArgs);
+      return;
     default:
       console.error(
         `[tasks] unknown command: ${command ?? "(missing)"}\n` +
-          "usage: node scripts/tasks.mjs <dev|build|start|lint>",
+          "usage: node scripts/tasks.mjs <dev|build|start|lint|test>",
       );
       process.exit(1);
   }
@@ -50,6 +53,13 @@ async function runLint() {
   ]);
   await runNodeStep("oxfmt", "node_modules/oxfmt/dist/cli.js", ["."]);
   await formatPackageJson();
+}
+
+async function runTests(testArgs) {
+  await runNodeStep("vitest", "node_modules/vitest/vitest.mjs", [
+    "run",
+    ...testArgs,
+  ]);
 }
 
 function runNodeStep(label, scriptPath, args = [], nodeArgs = []) {

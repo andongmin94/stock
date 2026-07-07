@@ -8,10 +8,12 @@ import { fetchUpbitTicker } from "@/lib/markets/providers/upbit-client";
 import type { MarketResponse } from "@/lib/markets/types";
 
 const MARKETS_CACHE_TTL_MS = 4_000;
+const MARKETS_STALE_IF_ERROR_MS = 120_000;
 
 let cachedMarkets: {
   data: MarketResponse;
   expiresAt: number;
+  staleUntil: number;
 } | null = null;
 let pendingMarketsRequest: Promise<MarketResponse> | null = null;
 
@@ -27,9 +29,17 @@ export async function getMarkets(): Promise<MarketResponse> {
       cachedMarkets = {
         data,
         expiresAt: Date.now() + MARKETS_CACHE_TTL_MS,
+        staleUntil: Date.now() + MARKETS_STALE_IF_ERROR_MS,
       };
 
       return data;
+    })
+    .catch((error: unknown) => {
+      if (cachedMarkets && cachedMarkets.staleUntil > Date.now()) {
+        return cachedMarkets.data;
+      }
+
+      throw error;
     })
     .finally(() => {
       pendingMarketsRequest = null;
@@ -44,7 +54,10 @@ async function fetchFreshMarkets(): Promise<MarketResponse> {
   try {
     const [marketData, annotationsData, usdtKrw] = await Promise.all([
       fetchHyperliquidMarketData(),
-      fetchHyperliquidAnnotations(),
+      fetchHyperliquidAnnotations().catch((error: unknown) => {
+        console.warn("Hyperliquid annotations request failed", error);
+        return [];
+      }),
       fetchUpbitTicker(),
     ]);
 
